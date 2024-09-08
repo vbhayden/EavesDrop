@@ -1,4 +1,4 @@
-## Interface: 100200
+## Interface: 100206
 ## Title: EavesDrop
 ## Notes: A simple combat log that displays events similar to SCT
 ## Version: 10.2.00
