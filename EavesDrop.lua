@@ -62,9 +62,20 @@ end
 -- API calls
 local UnitName = UnitName
 local UnitXP = UnitXP
-local GetSpellInfo = GetSpellInfo
 local GetTime = GetTime
 local InCombatLockdown = InCombatLockdown
+
+-- local GetSpellInfo = GetSpellInfo $# Removed in War Within
+local GetSpellInfo = GetSpellInfo or function(spellID)
+    if not spellID then
+        return nil;
+    end
+
+    local spellInfo = C_Spell.GetSpellInfo(spellID);
+    if spellInfo then
+        return spellInfo.name, nil, spellInfo.iconID, spellInfo.castTime, spellInfo.minRange, spellInfo.maxRange, spellInfo.spellID, spellInfo.originalIconID;
+    end
+end
 
 -- Combat log locals
 local pxp = UnitXP("player")
