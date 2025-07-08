@@ -437,7 +437,7 @@ function EavesDrop:HideFrame() EavesDropFrame:SetAlpha(0) end
 
 function EavesDrop:ShowFrame()
     EavesDropFrame:SetAlpha(1)
-    EavesDropTab:SetAlpha(0)
+    -- EavesDropTab:SetAlpha(0)
 end
 
 function EavesDrop:CombatEvent()
@@ -850,7 +850,8 @@ function EavesDrop:UpdateEvents()
     local key, value
     local frame, text, intexture, outexture
     local start, finish
-    local delay = db["FADETIME"] + (4 * arrSize)
+    -- local delay = db["FADETIME"] + (4 * arrSize)
+    local delay = db["FADETIME"]
     start = arrMaxSize - scroll
     finish = arrMaxSize - arrSize + 1 - scroll
     for i = start, finish, -1 do
@@ -960,19 +961,18 @@ function EavesDrop:ResetEvents()
 end
 
 function EavesDrop:OnUpdate()
-    local frame
     local count = 0
     curTime = GetTime()
     elapsed = curTime - lastTime
     lastTime = curTime
+    
     for i = 1, arrSize do
-        frame = arrEventFrames[i].frame
+        local frame = arrEventFrames[i].frame
         if (frame:IsShown()) then
             count = count + 1
             frame.delay = frame.delay - elapsed
             if frame.delay <= 0 then
                 frame.alpha = frame.alpha - .2
-                -- frame:SetAlpha(frame.alpha)
             end
             if (frame.alpha <= 0) then
                 frame:Hide()
@@ -987,7 +987,9 @@ function EavesDrop:OnUpdate()
         allShown = false
     end
     -- if none are active, stop onUpdate
-    if (count == 0) then self:StopOnUpdate() end
+    if (count == 0) then 
+        self:StopOnUpdate() 
+    end
     -- hide frame when none active
     if (db["FADEFRAME"]) then
         if ((count == 0) and (scroll == 0)) then
